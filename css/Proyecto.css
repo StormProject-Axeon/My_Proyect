@@ -1,0 +1,387 @@
+body {
+    font-family: 'Inria Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+html {
+    font-size: 16px;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+/* HEADER RESPONSIVO */
+header {
+    background-color: #000000d2;
+    color: #f0d92e;
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+header h1 {
+    margin: 0;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%;
+}
+
+/* MENÚ PRINCIPAL */
+.main-nav {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu-list {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1.5rem;
+}
+
+.menu-list li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 0.5rem 0;
+    display: block;
+}
+
+.menu-list li a:hover {
+    color: #f0d92e;
+}
+
+/* BOTÓN HAMBURGUESA MEJORADO */
+.menu {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    position: relative;
+    z-index: 1001;
+}
+
+.menu:focus {
+    outline: none;
+}
+
+.bar {
+    width: 100%;
+    height: 0.25rem;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+/* MENÚ ACTIVO */
+.menu.active .bar:nth-child(1) {
+    transform: translateY(0.4375rem) rotate(45deg);
+}
+
+.menu.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu.active .bar:nth-child(3) {
+    transform: translateY(-0.4375rem) rotate(-45deg);
+}
+
+/* HERO SECTION RESPONSIVO */
+.hero {
+    background-image: url(../img/pcpl.jpg);
+    background-size: cover;
+    background-position: center;
+    height: clamp(18.75rem, 50vh, 31.25rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+}
+
+.hero-content {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: clamp(1rem, 5vw, 2rem);
+    border-radius: 0.5rem;
+    max-width: 90%;
+}
+
+.hero h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* PROMOCIONES RESPONSIVAS */
+.promotions {
+    padding: clamp(1.5rem, 5vw, 2.5rem) 1rem;
+    text-align: center;
+}
+
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    max-width: 75rem;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.category {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    padding: 1.25rem;
+    text-align: center;
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.category:hover {
+    transform: translateY(-0.3125rem);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+.category img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.25rem;
+    margin-bottom: 1rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+}
+
+.category h3 {
+    font-size: 1.25rem;
+    margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category i {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.category p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0.5rem 0 0;
+}
+
+.promo-details {
+    background-color: #fff9e6;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 25rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.1);
+}
+
+.promo-details i {
+    font-size: 1.5rem;
+    color: #e44d26;
+    margin-bottom: 0.5rem;
+}
+
+.promo-details h2 {
+    font-size: 1.25rem;
+    margin: 0 0 1rem;
+    color: #333;
+}
+
+.promo-details .discount {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #e44d26;
+    margin: 0.5rem 0;
+    line-height: 1;
+}
+
+.promo-details .dates {
+    font-size: 1.1rem;
+    color: #666;
+    margin: 0.5rem 0 0;
+}
+
+/* ENLACES DE CATEGORÍAS */
+.Aperitivos-link, .Postres-link, .Bebidas-link {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s;
+}
+
+.Aperitivos-link:hover, .Postres-link:hover, .Bebidas-link:hover {
+    color: #000;
+}
+
+/* FOOTER RESPONSIVO */
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 1.5rem 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.social-icons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.social-icons a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #f0d92e;
+    transform: translateY(-0.25rem);
+}
+
+/* MEDIA QUERIES PARA DISPOSITIVOS MÓVILES */
+@media screen and (max-width: 768px) {
+    header {
+        padding: 1rem;
+    }
+    
+    .menu {
+        display: flex;
+    }
+    
+    .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: #222;
+        transition: right 0.3s ease;
+        z-index: 1000;
+        padding-top: 5rem;
+    }
+    
+    .main-nav.active {
+        right: 0;
+    }
+    
+    .menu-list {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    
+    .menu-list li {
+        margin: 0.5rem 0;
+    }
+    
+    .menu-list li a {
+        font-size: 1.1rem;
+        padding: 0.75rem;
+    }
+    
+    .categories {
+        grid-template-columns: 1fr;
+    }
+    
+    .promo-details {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+        max-width: 60%;
+    }
+    
+    .hero-content {
+        padding: 1rem;
+        width: 95%;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .social-icons a {
+        font-size: 1.25rem;
+    }
+}
+
+/* ANIMACIONES Y TRANSICIONES */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.category, .promo-details {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+/* MEJORAS DE ACCESIBILIDAD */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+:focus-visible {
+    outline: 2px solid #f0d92e;
+    outline-offset: 2px;
+}

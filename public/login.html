@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(250.59deg, #1E3A8A 41.49%, #3B82F6 70.27%);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .title {
+            font-style: italic;
+            font-weight: 700;
+            font-size: clamp(30px, 5vw, 60px);
+            line-height: 1.2;
+            color: #FFFFFF;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .email-field, .password-field {
+            width: 100%;
+            height: 60px;
+            background: rgba(20, 22, 29, 0.52);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .email-field input, .password-field input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            color: #656B92;
+            font-size: clamp(14px, 2.5vw, 20px);
+            padding-left: 40px;
+        }
+
+        .mail-icon, .lock-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #656B92;
+            font-size: 20px;
+        }
+
+        .login-button {
+            width: 100%;
+            height: 60px;
+            background: #1D13FF;
+            border: 3px solid #221E8A;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 15px;
+            transition: background 0.3s;
+            cursor: pointer;
+        }
+
+        .login-button.checked {
+            background: #0056b3;
+        }
+
+        .login-text {
+            font-style: normal;
+            font-weight: 700;
+            font-size: clamp(16px, 2.5vw, 25px);
+            line-height: 1.2;
+            color: #FFFFFF;
+        }
+
+        .remember-box {
+            width: 20px;
+            height: 20px;
+            background: #FFFFFF;
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: 10px;
+        }
+
+        .remember-input {
+            display: none;
+        }
+
+        .remember-label {
+            font-style: normal;
+            font-weight: 400;
+            font-size: clamp(12px, 2vw, 18px);
+            line-height: 1.2;
+            color: #FFFFFF;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            cursor: pointer;
+        }
+
+        .remember-input:checked + .remember-box {
+            background: #1D13FF;
+        }
+
+        .remember-input:checked ~ .login-button {
+            background: #0056b3;
+        }
+
+        .image {
+            flex: 1;
+            min-width: 0;
+            height: 500px;
+            background: url('../img/login.png') no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .image {
+                order: -1;
+                margin-bottom: 20px;
+                height: 300px;
+            }
+            .email-field, .password-field, .login-button {
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image"></div>
+        <div class="form-group">
+            <div class="title">Iniciar Sesión</div>
+            <div class="email-field">
+                <i class="fas fa-envelope mail-icon"></i>
+                <input type="text" id="email" placeholder="Correo electrónico" />
+            </div>
+            <div class="password-field">
+                <i class="fas fa-lock lock-icon"></i>
+                <input type="password" id="password" placeholder="Contraseña" />
+            </div>
+            <div class="RememberIco">
+                <input type="checkbox" id="remember" class="remember-input">
+                <label for="remember" class="remember-box"></label>
+                <label for="remember" class="remember-label">Recordar mis datos</label>
+            </div>
+            <div class="login-button" onclick="loginUser()">
+                <span class="login-text">Iniciar Sesión</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Cargar datos guardados si existen
+        document.addEventListener('DOMContentLoaded', function() {
+            const rememberCheckbox = document.getElementById('remember');
+            const savedEmail = localStorage.getItem('rememberedEmail');
+            
+            if (savedEmail) {
+                document.getElementById('email').value = savedEmail;
+                rememberCheckbox.checked = true;
+            }
+            
+            // Verificar si ya está logueado
+            checkAuth();
+        });
+
+        async function checkAuth() {
+            const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            
+            if (authToken) {
+                try {
+                    const response = await fetch('/api/validate-token', {
+                        headers: {
+                            'Authorization': `Bearer ${authToken}`
+                        }
+                    });
+                    
+                    if (response.ok) {
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error('Error validating token:', error);
+                }
+            }
+        }
+
+        async function loginUser() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember').checked;
+
+            if (!email || !password) {
+                alert('Por favor, completa todos los campos.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ correo: email, contraseña: password }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Guardar email si "Recordar mis datos" está marcado
+                    if (rememberMe) {
+                        localStorage.setItem('rememberedEmail', email);
+                        localStorage.setItem('authToken', data.token);
+                    } else {
+                        localStorage.removeItem('rememberedEmail');
+                        sessionStorage.setItem('authToken', data.token);
+                    }
+
+                    // Redirigir al index
+                    window.location.href = 'index.html';
+                } else {
+                    alert(data.error);
+                }
+            } catch (error) {
+                console.error('Error logging in:', error);
+                alert('Error al conectar con el servidor.');
+            }
+        }
+    </script>
+</body>
+</html>
