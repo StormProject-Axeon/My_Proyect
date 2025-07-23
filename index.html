@@ -1,0 +1,187 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Tu tienda de videojuegos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <style>
+        /* Additional styles specific to index.html */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            font-size: 24px;
+            padding: 40px;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #1E3A8A;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #3B82F6;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dots-btn {
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.2s;
+        }
+        
+        .dots-btn:hover {
+            transform: scale(1.1);
+            color: #FF2E63;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="home-container">
+                <a href="../index.html" class="home-btn"><i class="fas fa-home"></i></a>
+            </div>
+            <div class="search-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Buscar juegos..." id="search-input">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <nav class="nav">
+                <div class="logo">
+                    <img src="../img/logo.jpg" alt="GameHub Logo" onerror="this.src='../img/logo.jpg'">
+                </div>
+                <a href="#"><i class="fas fa-user"></i></a>
+                <a href="#"><i class="fas fa-shopping-cart"></i></a>
+                <div class="dropdown">
+                    <div class="dots-btn"><i class="fas fa-ellipsis-v"></i></div>
+                    <div class="dropdown-content">
+                        <a href="#"><i class="fas fa-history"></i> Historial</a>
+                        <a href="#"><i class="fas fa-headset"></i> Soporte</a>
+                        <a href="#"><i class="fas fa-gamepad"></i> Games Free</a>
+                        <a href="#"><i class="fas fa-tag"></i> Ofertas</a>
+                        <a href="#"><i class="fas fa-info-circle"></i> Acerca De</a>
+                        <a href="#"><i class="fas fa-cog"></i> Ajustes</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>Juegos Destacados</h1>
+            <div class="game-grid" id="game-grid">
+                <div class="no-results">Cargando juegos...</div>
+            </div>
+            <div id="error-message" style="color: red; text-align: center;"></div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+    <div class="footer-content">
+        <p class="copyright">Derechos reservados © 2025 GameHub</p>
+        <div class="social-media">
+            <p>Síguenos en nuestras redes:</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+    </div>
+
+    <script>
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                loadProducts(e.target.value);
+            });
+        });
+
+        // Cargar productos desde el backend
+        async function loadProducts(searchTerm = '') {
+            try {
+                const url = searchTerm ? `/api/productos?search=${encodeURIComponent(searchTerm)}` : '/api/productos';
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Error al cargar los productos.');
+                const products = await response.json();
+                renderProducts(products);
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                showError('Error al cargar los juegos. Por favor intenta nuevamente.');
+            }
+        }
+
+        // Mostrar productos en la página
+        function renderProducts(products) {
+            const grid = document.getElementById('game-grid');
+            
+            if (products.length === 0) {
+                grid.innerHTML = '<div class="no-results">No se encontraron juegos</div>';
+                return;
+            }
+            
+            grid.innerHTML = '';
+            
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <img src="${product.imagen || 'https://via.placeholder.com/300x400?text=GameHub'}" 
+                         alt="${product.nombre}"
+                         onerror="this.src='https://via.placeholder.com/300x400?text=GameHub'">
+                    <div class="game-info">
+                        <h3>${product.nombre}</h3>
+                        <div class="rating">
+                            ${'<i class="fas fa-star"></i>'.repeat(5)}
+                        </div>
+                        <p class="price">$${product.precio.toFixed(2)}</p>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Mostrar mensaje de error
+        function showError(message) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            setTimeout(() => errorElement.textContent = '', 5000);
+        }
+    </script>
+</body>
+</html>

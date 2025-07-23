@@ -1,0 +1,409 @@
+<!-- public/admin.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main2.css">
+    <style>
+        /* Additional styles specific to admin.html */
+        .admin-panel {
+            flex: 1;
+            padding: 20px 0;
+        }
+
+        .admin-panel h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .admin-panel form {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            font-size: 18px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #FF2E63;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #3B82F6;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .admin-panel table {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-collapse: collapse;
+        }
+
+        .admin-panel th,
+        .admin-panel td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-panel th {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .admin-panel td {
+            font-size: 16px;
+            vertical-align: middle;
+        }
+
+        .table-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .actions-cell {
+            white-space: nowrap;
+        }
+
+        .btn-action {
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .admin-panel table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="search-bar">
+                <input type="text" placeholder="Buscar juegos..." id="search-input">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <nav class="nav">
+                <a href="index.html"><i class="fas fa-home"></i> Volver a la tienda</a>
+                <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+            </nav>
+        </header>
+
+        <!-- Admin Panel -->
+        <div class="admin-panel">
+            <h1>Panel de Administración</h1>
+            
+            <form id="product-form">
+                <input type="hidden" id="product-id">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-name">Nombre del Juego</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-price">Precio ($)</label>
+                        <input type="number" step="0.01" id="product-price" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="product-description">Descripción</label>
+                    <textarea id="product-description" required></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-image">URL de la Imagen</label>
+                        <input type="text" id="product-image" placeholder="https://ejemplo.com/imagen.jpg">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category">Categoría</label>
+                        <select id="product-category">
+                            <option value="Aventura">Aventura</option>
+                            <option value="Acción">Acción</option>
+                            <option value="RPG">RPG</option>
+                            <option value="Deportes">Deportes</option>
+                            <option value="Estrategia">Estrategia</option>
+                            <option value="Sandbox">Sandbox</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="product-featured"> 
+                        Destacado (mostrar en página principal)
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-btn" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Juego</button>
+                </div>
+            </form>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Categoría</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table-body">
+                    <tr>
+                        <td colspan="6">Cargando productos...</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div id="error-message" style="color: red; text-align: center;"></div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p class="copyright">Derechos reservados © 2025 GameHub</p>
+            <div class="social-media">
+                <p>Síguenos en nuestras redes:</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            setupEventListeners();
+        });
+
+        // Configurar event listeners
+        function setupEventListeners() {
+            document.getElementById('product-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                saveProduct();
+            });
+            document.getElementById('cancel-btn').addEventListener('click', resetForm);
+            document.getElementById('search-input').addEventListener('input', (e) => {
+                loadProducts(e.target.value);
+            });
+            document.getElementById('logout-btn').addEventListener('click', () => {
+                window.location.href = 'index.html';
+            });
+        }
+
+        // Cargar productos desde el backend
+        async function loadProducts(searchTerm = '') {
+            try {
+                const url = searchTerm ? `/api/admin/productos?search=${encodeURIComponent(searchTerm)}` : '/api/admin/productos';
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Error al cargar los productos.');
+                const products = await response.json();
+                renderProductsTable(products);
+            } catch (error) {
+                console.error('Error al cargar productos:', error);
+                showError('Error al cargar los productos. Por favor intenta nuevamente.');
+            }
+        }
+
+        // Mostrar productos en la tabla
+        function renderProductsTable(products) {
+            const tbody = document.getElementById('products-table-body');
+            
+            if (products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6">No se encontraron productos</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = '';
+            
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td>
+                        <img src="${product.imhoo || 'https://via.placeholder.com/60x60?text=GameHub'}" 
+                             alt="${product.nombre}"
+                             class="table-img"
+                             onerror="this.src='https://via.placeholder.com/60x60?text=GameHub'">
+                    </td>
+                    <td>${product.nombre}</td>
+                    <td>$${product.precio.toFixed(2)}</td>
+                    <td>${product.categoria || 'Sin categoría'}</td>
+                    <td class="actions-cell">
+                        <button class="btn-action btn-primary" onclick="editProduct(${product.id})">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn-action btn-danger" onclick="deleteProduct(${product.id})">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Editar producto
+        async function editProduct(productId) {
+            try {
+                const response = await fetch(`/api/productos/${productId}`);
+                if (!response.ok) throw new Error('Error al cargar el producto.');
+                const product = await response.json();
+                
+                document.getElementById('product-id').value = product.id;
+                document.getElementById('product-name').value = product.nombre;
+                document.getElementById('product-description').value = product.descripcion || '';
+                document.getElementById('product-price').value = product.precio;
+                document.getElementById('product-image').value = product.imagen || '';
+                document.getElementById('product-category').value = product.categoria || 'Aventura';
+                document.getElementById('product-featured').checked = product.destacado === 1;
+                
+                document.getElementById('product-form').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error al editar producto:', error);
+                showError('Error al cargar el producto para editar.');
+            }
+        }
+
+        // Eliminar producto
+        async function deleteProduct(productId) {
+            if (confirm('¿Estás seguro de eliminar este producto? Esta acción no se puede deshacer.')) {
+                try {
+                    const response = await fetch(`/api/productos/${productId}`, { method: 'DELETE' });
+                    if (!response.ok) throw new Error('Error al eliminar el producto.');
+                    loadProducts();
+                    resetForm();
+                } catch (error) {
+                    console.error('Error al eliminar producto:', error);
+                    showError('Error al eliminar el producto.');
+                }
+            }
+        }
+
+        // Guardar producto
+        async function saveProduct() {
+            try {
+                const productData = {
+                    id: document.getElementById('product-id').value,
+                    nombre: document.getElementById('product-name').value,
+                    descripcion: document.getElementById('product-description').value,
+                    precio: parseFloat(document.getElementById('product-price').value),
+                    imagen: document.getElementById('product-image').value || null,
+                    categoria: document.getElementById('product-category').value,
+                    destacado: document.getElementById('product-featured').checked ? 1 : 0
+                };
+                
+                const response = await fetch('/api/productos', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+                
+                if (!response.ok) throw new Error('Error al guardar el producto.');
+                loadProducts();
+                resetForm();
+            } catch (error) {
+                console.error('Error al guardar producto:', error);
+                showError('Error al guardar el producto. Verifica los datos e intenta nuevamente.');
+            }
+        }
+
+        // Resetear el formulario
+        function resetForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('product-id').value = '';
+        }
+
+        // Mostrar mensaje de error
+        function showError(message) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            setTimeout(() => errorElement.textContent = '', 5000);
+        }
+    </script>
+</body>
+</html>

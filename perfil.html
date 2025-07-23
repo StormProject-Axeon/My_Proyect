@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Usuario</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            position: relative;
+            width: 1728px;
+            height: 1117px;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(250.59deg, #1E3A8A 41.49%, #3B82F6 70.27%);
+            border: 1px solid #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: absolute;
+            width: 1728px;
+            height: 162px;
+            left: 0px;
+            top: 0px;
+            background: conic-gradient(from 87.88deg at 50% 100%, #1E40AF -251.32deg, #0D1B49 57.24deg, #1E40AF 108.68deg, #0D1B49 417.24deg);
+            border-radius: 10px;
+        }
+
+        .search-container {
+            position: absolute;
+            width: 841px;
+            height: 115px;
+            left: 276px;
+            top: 30px;
+            background: rgba(59, 42, 88, 0.52);
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            left: 307px;
+            top: 53px;
+            color: #FF2E63;
+        }
+
+        .search-text {
+            position: absolute;
+            width: 300px;
+            height: 53px;
+            left: 420px;
+            top: 64px;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 45px;
+            line-height: 54px;
+            color: #FFFFFF;
+        }
+
+        .menu-dots {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            left: 1583px;
+            top: 21px;
+        }
+
+        .home-icon {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            left: 64px;
+            top: 21px;
+            color: #FF2E63;
+        }
+
+        .user-icon {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            left: 1483px;
+            top: 31px;
+            color: #FF2E63;
+        }
+
+        .logo {
+            position: absolute;
+            width: 114px;
+            height: 84px;
+            left: 1315px;
+            top: 42px;
+            border-radius: 20px;
+        }
+
+        .profile-pic {
+            position: absolute;
+            width: 317px;
+            height: 315px;
+            left: 65px;
+            top: 199px;
+            border-radius: 157.5px;
+        }
+
+        .username {
+            position: absolute;
+            width: 687px;
+            height: 136px;
+            left: 401px;
+            top: 220px;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 100px;
+            line-height: 121px;
+            color: #FFFFFF;
+        }
+
+        .status-indicator {
+            position: absolute;
+            width: 49px;
+            height: 49px;
+            left: 424px;
+            top: 363px;
+            background: #15FF00;
+            border-radius: 24.5px;
+        }
+
+        .status-text {
+            position: absolute;
+            width: 236px;
+            height: 54px;
+            left: 497px;
+            top: 358px;
+            font-style: italic;
+            font-weight: 700;
+            font-size: 45px;
+            line-height: 54px;
+            color: #FFFFFF;
+        }
+
+        .edit-icon {
+            position: absolute;
+            width: 61px;
+            height: 61px;
+            left: 918px;
+            top: 256px;
+            color: #000000;
+        }
+
+        .section-title {
+            font-style: normal;
+            font-weight: 700;
+            font-size: 59px;
+            line-height: 71px;
+            color: #FFFFFF;
+        }
+
+        .purchased-games {
+            position: absolute;
+            width: 553px;
+            height: 71px;
+            left: 26px;
+            top: 558px;
+        }
+
+        .wishlist {
+            position: absolute;
+            width: 519px;
+            height: 71px;
+            left: 709px;
+            top: 558px;
+        }
+
+        .free-trials {
+            position: absolute;
+            width: 491px;
+            height: 108px;
+            left: 1240px;
+            top: 558px;
+            font-size: 45px;
+            line-height: 54px;
+        }
+
+        .divider {
+            position: absolute;
+            height: 0px;
+            border: 1px solid #646464;
+        }
+
+        .horizontal-divider-top {
+            width: 1728px;
+            left: 0px;
+            top: 558px;
+        }
+
+        .horizontal-divider-bottom {
+            width: 1728px;
+            left: 0px;
+            top: 664px;
+        }
+
+        .vertical-divider-left {
+            width: 559px;
+            left: 637px;
+            top: 558px;
+            transform: rotate(90deg);
+        }
+
+        .vertical-divider-right {
+            width: 559px;
+            left: 1231px;
+            top: 558px;
+            transform: rotate(90deg);
+        }
+
+        .game {
+            position: absolute;
+            width: 190px;
+            height: 259px;
+        }
+
+        .game-title {
+            position: absolute;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 25px;
+            line-height: 30px;
+            color: #FFFFFF;
+        }
+
+        .star-icon {
+            position: absolute;
+            width: 33px;
+            height: 33px;
+            background: #FFFF00;
+        }
+
+        .footer {
+            position: absolute;
+            width: 1728px;
+            height: 110px;
+            left: 0px;
+            top: 1021px;
+            background: #383333;
+        }
+
+        .copyright {
+            position: absolute;
+            width: 252px;
+            height: 30px;
+            left: 24px;
+            top: 1051px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 25px;
+            line-height: 30px;
+            color: #FFFFFF;
+        }
+
+        .social-text {
+            position: absolute;
+            width: 335px;
+            height: 30px;
+            left: 1333px;
+            top: 1051px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 25px;
+            line-height: 30px;
+            color: #FFFFFF;
+        }
+
+        .google-icon {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            left: 1408px;
+            top: 1081px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"></div>
+    
+    <div class="search-container"></div>
+    <div class="search-icon">🔍</div>
+    <div class="search-text">Buscar juegos</div>
+    
+    <div class="menu-dots">⋮</div>
+    <div class="home-icon">🏠</div>
+    <div class="user-icon">👤</div>
+    <div class="logo"></div>
+    
+    <img class="profile-pic" src="image.png" alt="Foto de perfil">
+    <div class="username" id="username">Username</div>
+    
+    <div class="status-indicator"></div>
+    <div class="status-text">conectado</div>
+    <div class="edit-icon">✏️</div>
+    
+    <div class="purchased-games section-title">Juegos comprados</div>
+    <div class="wishlist section-title">Tu lista de deseos</div>
+    <div class="free-trials section-title">Versiones de Pruebas Gratuitas</div>
+    
+    <div class="divider horizontal-divider-top"></div>
+    <div class="divider horizontal-divider-bottom"></div>
+    <div class="divider vertical-divider-left"></div>
+    <div class="divider vertical-divider-right"></div>
+    
+    <!-- Purchased Games -->
+    <img class="game" src="image.png" alt="Rocket League" style="left: 33px; top: 678px;">
+    <div class="game-title" style="left: 33px; top: 949px;">Rocket League</div>
+    
+    <img class="game" src="image" alt="Among Us" style="left: 339px; top: 688px;">
+    <div class="game-title" style="left: 353px; top: 956px;">Among Us</div>
+    
+    <!-- Wishlist Games -->
+    <img class="game" src="image.png" alt="Super Mario Bros Wonder" style="left: 690px; top: 678px;">
+    <div class="star-icon" style="left: 690px; top: 902px;">⭐</div>
+    <div class="game-title" style="left: 690px; top: 946px; width: 210px; text-align: center;">Super Mario Bros Wonder</div>
+    
+    <img class="game" src="w21zay6nkia41" alt="GTA: SA" style="left: 988px; top: 678px;">
+    <div class="star-icon" style="left: 989px; top: 902px;">⭐</div>
+    <div class="game-title" style="left: 988px; top: 949px;">GTA: SA</div>
+    
+    <!-- Free Trials -->
+    <img class="game" src="image.png" alt="Dragon Ball Z" style="left: 1262px; top: 678px;">
+    <div class="game-title" style="left: 1262px; top: 949px;">Dragon Ball Z</div>
+    
+    <img class="game" src="image.png" alt="Pokemón: Let´s go Pikachu" style="left: 1513px; top: 678px;">
+    <div class="game-title" style="left: 1502px; top: 946px; width: 230px;">Pokemón: Let´s go Pikachu</div>
+    
+    <div class="footer"></div>
+    <div class="copyright">Derechos reservados</div>
+    <div class="social-text">Siguenos en nuestras redes:</div>
+    <div class="google-icon">G</div>
+
+     <script>
+        // Verificar autenticación y cargar datos del usuario
+        document.addEventListener('DOMContentLoaded', async function() {
+            const authToken = localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            
+            if (!authToken) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/user-profile', {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('No autorizado');
+                }
+                
+                const user = await response.json();
+                document.getElementById('username').textContent = user.username || user.correo.split('@')[0];
+                
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = 'login.html';
+            }
+            
+            // Add click handlers for icons
+            document.querySelector('.home-icon').addEventListener('click', function() {
+                window.location.href = 'index.html';
+            });
+            
+            function logout() {
+            localStorage.removeItem('authToken');
+            sessionStorage.removeItem('authToken');
+            window.location.href = 'login.html';
+        }
+
+            document.querySelector('.user-icon').addEventListener('click', function() {
+                window.location.href = 'profile.html';
+            });
+            
+            document.querySelector('.edit-icon').addEventListener('click', function() {
+                alert('Editar perfil functionality would go here');
+            });
+            
+            document.querySelector('.search-container').addEventListener('click', function() {
+                const searchTerm = prompt('Ingrese su búsqueda:');
+                if (searchTerm) {
+                    // Implement search functionality
+                    alert(`Buscar: ${searchTerm}`);
+                }
+            });
+            
+            // Add click handlers for games (would link to game details in a real app)
+            document.querySelectorAll('.game').forEach(game => {
+                game.addEventListener('click', function() {
+                    const altText = this.getAttribute('alt');
+                    alert(`Mostrar detalles para: ${altText}`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
