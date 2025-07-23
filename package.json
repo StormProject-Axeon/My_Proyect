@@ -11,5 +11,18 @@
     "morgan": "^1.10.1",
     "rotating-file-stream": "^3.2.6",
     "sqlite3": "^5.1.7"
-  }
+  },
+  "name": "site-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
 }
